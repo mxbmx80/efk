@@ -1,20 +1,5 @@
 version: "3.8"
 services:
-  web:
-    container_name: nginx
-    image: nginx
-    ports:
-      - 80:80
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - fluent-bit
-    logging:
-      driver: "fluentd"
-      options:
-        fluentd-address: localhost:24224
-        tag: nginx.logs
-
   fluent-bit:
     container_name: fluent-bit
     image: fluent/fluent-bit
@@ -31,13 +16,13 @@ services:
 
   elasticsearch:
     container_name: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    image: docker.arvancloud.ir/elasticsearch:7.16.3
     environment:
       - "discovery.type=single-node"
 
   kibana:
     container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.10.1
+    image: docker.arvancloud.ir/kibana:7.16.3
     depends_on:
       - "elasticsearch"
     ports:
